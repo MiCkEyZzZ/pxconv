@@ -202,3 +202,39 @@ func TestBoundaryRounding(t *testing.T) {
 		}
 	}
 }
+
+// TestNegativeValues проверяет, что при передаче отрицательных значений в NewMetric, они заменяются на 1.
+func TestNegativeValues(t *testing.T) {
+	m := NewMetric(-10, -5)
+
+	if m.PxPerDp != 1 {
+		t.Errorf("NewMetric(-10, -5) PxPerDp = %v; expected 1", m.PxPerDp)
+	}
+	if m.PxPerSp != 1 {
+		t.Errorf("NewMetric(-10, -5) PxPerSp = %v; expected 1", m.PxPerSp)
+	}
+}
+
+// TestZeroValues проверяет, что нулевые значения заменяются на 1 в NewMetric.
+func TestZeroValues(t *testing.T) {
+	m := NewMetric(0, 0)
+
+	if m.PxPerDp != 1 {
+		t.Errorf("NewMetric(0, 0) PxPerDp = %v; expected 1", m.PxPerDp)
+	}
+	if m.PxPerSp != 1 {
+		t.Errorf("NewMetric(0, 0) PxPerSp = %v; expected 1", m.PxPerSp)
+	}
+}
+
+// TestConstructorWithValidValues проверяет, что корректные значения не изменяются в NewMetric.
+func TestConstructorWithValidValues(t *testing.T) {
+	m := NewMetric(2, 3)
+
+	if m.PxPerDp != 2 {
+		t.Errorf("NewMetric(2, 3) PxPerDp = %v; expected 2", m.PxPerDp)
+	}
+	if m.PxPerSp != 3 {
+		t.Errorf("NewMetric(2, 3) PxPerSp = %v; expected 3", m.PxPerSp)
+	}
+}
