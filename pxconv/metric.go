@@ -4,22 +4,22 @@ import (
 	"math"
 )
 
-// Dp — единицы, независимые от устройства, для измерения расстояний на экране.
+// Dp represents device-independent units for measuring distances on the screen.
 type Dp float32
 
-// Sp — единицы, независимые от устройства, для измерения шрифтов.
+// Sp represents device-independent units for measuring font sizes.
 type Sp float32
 
-// Metric используется для конвертации независимых экранных единиц (dp, sp) в пиксели (px).
+// Metric is used to convert device-independent screen units (dp, sp) into pixels (px).
 type Metric struct {
-	// PxPerDp - количество пикселей на один dp.
+	// PxPerDp is the number of pixels per one dp.
 	PxPerDp float32
-	// PxPerSp - количество пикселей на один sp.
+	// PxPerSp is the number of pixels per one sp.
 	PxPerSp float32
 }
 
-// NewMetric создаёт новый экземпляр Metric, проверяя входные значения на корректность.
-// Если переданы нулевые или отрицательные значения, они будут заменены на 1.
+// NewMetric creates a new instance of Metric, validating the input values.
+// If zero or negative values are provided, they will be replaced with 1.
 func NewMetric(pxPerDp, pxPerSp float32) Metric {
 	return Metric{
 		PxPerDp: ensurePositive(pxPerDp),
@@ -27,44 +27,43 @@ func NewMetric(pxPerDp, pxPerSp float32) Metric {
 	}
 }
 
-// DpToPx м-д конвертирует значение dp в пиксели (px), округляя до ближайшего целого числа.
+// DpToPx converts a dp value into pixels (px), rounding to the nearest integer.
 func (c Metric) DpToPx(value Dp) int {
 	return int(math.Round(float64(ensurePositive(c.PxPerDp)) * float64(value)))
 }
 
-// SpToPx м-д конвертирует значение sp в пиксели (px), округляя до ближайшего целого числа.
+// SpToPx converts an sp value into pixels (px), rounding to the nearest integer.
 func (c Metric) SpToPx(value Sp) int {
 	return int(math.Round(float64(ensurePositive(c.PxPerSp)) * float64(value)))
 }
 
-// DpToSp м-д конвертирует значение dp в sp, используя плотности для dp и sp.
+// DpToSp converts a dp value to sp using the respective densities for dp and sp.
 func (c Metric) DpToSp(value Dp) Sp {
 	return Sp(float32(value) * ensurePositive(c.PxPerDp) / ensurePositive(c.PxPerSp))
 }
 
-// SpToDp м-д конвертирует значение sp в dp, используя плотности для dp и sp.
+// SpToDp converts an sp value to dp using the respective densities for sp and dp.
 func (c Metric) SpToDp(v Sp) Dp {
 	return Dp(float32(v) * ensurePositive(c.PxPerSp) / ensurePositive(c.PxPerDp))
 }
 
-// PxToDp м-д конвертирует значение пикселей (px) в dp.
+// PxToDp converts a pixel (px) value to dp.
 func (c Metric) PxToDp(v int) Dp {
 	return Dp(float32(v) / ensurePositive(c.PxPerDp))
 }
 
-// PxToSp м-д конвертирует значение пикселей (px) в sp.
+// PxToSp converts a pixel (px) value to sp.
 func (c Metric) PxToSp(v int) Sp {
 	return Sp(float32(v) / ensurePositive(c.PxPerSp))
 }
 
-// GetDensity возвращает текущие значения плотности (PxPerDp и PxPerSp).
-// Используется для проверки или отладки текущих коэффициентов плотности.
+// GetDensity returns the current density values (PxPerDp and PxPerSp).
+// This is useful for checking or debugging the current density ratios.
 func (c Metric) GetDensity() (float32, float32) {
 	return c.PxPerDp, c.PxPerSp
 }
 
-// ensurePositive ф-я возвращает положительное значение. Если входное
-// значение 0 или меньше, возвращает 1.
+// ensurePositive returns a positive value. If the input value is 0 or less, it returns 1.
 func ensurePositive(value float32) float32 {
 	if value <= 0 {
 		return 1
