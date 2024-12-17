@@ -205,7 +205,7 @@ func TestBoundaryRounding(t *testing.T) {
 
 // TestNegativeValues проверяет, что при передаче отрицательных значений в NewMetric, они заменяются на 1.
 func TestNegativeValues(t *testing.T) {
-	m := NewMetric(-10, -5)
+	m := NewMetric(-10, -5, 96)
 
 	if m.PxPerDp != 1 {
 		t.Errorf("NewMetric(-10, -5) PxPerDp = %v; expected 1", m.PxPerDp)
@@ -217,7 +217,7 @@ func TestNegativeValues(t *testing.T) {
 
 // TestZeroValues проверяет, что нулевые значения заменяются на 1 в NewMetric.
 func TestZeroValues(t *testing.T) {
-	m := NewMetric(0, 0)
+	m := NewMetric(0, 0, 96)
 
 	if m.PxPerDp != 1 {
 		t.Errorf("NewMetric(0, 0) PxPerDp = %v; expected 1", m.PxPerDp)
@@ -229,7 +229,7 @@ func TestZeroValues(t *testing.T) {
 
 // TestConstructorWithValidValues проверяет, что корректные значения не изменяются в NewMetric.
 func TestConstructorWithValidValues(t *testing.T) {
-	m := NewMetric(2, 3)
+	m := NewMetric(2, 3, 96)
 
 	if m.PxPerDp != 2 {
 		t.Errorf("NewMetric(2, 3) PxPerDp = %v; expected 2", m.PxPerDp)
@@ -243,7 +243,7 @@ func TestConstructorWithValidValues(t *testing.T) {
 
 // Бенчмарк для метода DpToPx
 func BenchmarkDpToPx(b *testing.B) {
-	metric := NewMetric(2.0, 2.0)
+	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
 		metric.DpToPx(Dp(10))
 	}
@@ -251,7 +251,7 @@ func BenchmarkDpToPx(b *testing.B) {
 
 // Бенчмарк для метода SpToPx
 func BenchmarkSpToPx(b *testing.B) {
-	metric := NewMetric(2.0, 2.0)
+	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
 		metric.SpToPx(Sp(15))
 	}
@@ -259,7 +259,7 @@ func BenchmarkSpToPx(b *testing.B) {
 
 // Бенчмарк для метода PxToDp
 func BenchmarkPxToDp(b *testing.B) {
-	metric := NewMetric(2.0, 2.0)
+	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
 		metric.PxToDp(50)
 	}
@@ -267,7 +267,7 @@ func BenchmarkPxToDp(b *testing.B) {
 
 // Бенчмарк для метода DpToSp
 func BenchmarkDpToSp(b *testing.B) {
-	metric := NewMetric(2.0, 2.0)
+	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
 		metric.DpToSp(Dp(10))
 	}
