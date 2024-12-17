@@ -238,3 +238,37 @@ func TestConstructorWithValidValues(t *testing.T) {
 		t.Errorf("NewMetric(2, 3) PxPerSp = %v; expected 3", m.PxPerSp)
 	}
 }
+
+//------------------------------------ Бенчмарки ------------------------------------
+
+// Бенчмарк для метода DpToPx
+func BenchmarkDpToPx(b *testing.B) {
+	metric := NewMetric(2.0, 2.0)
+	for i := 0; i < b.N; i++ {
+		metric.DpToPx(Dp(10))
+	}
+}
+
+// Бенчмарк для метода SpToPx
+func BenchmarkSpToPx(b *testing.B) {
+	metric := NewMetric(2.0, 2.0)
+	for i := 0; i < b.N; i++ {
+		metric.SpToPx(Sp(15))
+	}
+}
+
+// Бенчмарк для метода PxToDp
+func BenchmarkPxToDp(b *testing.B) {
+	metric := NewMetric(2.0, 2.0)
+	for i := 0; i < b.N; i++ {
+		metric.PxToDp(50)
+	}
+}
+
+// Бенчмарк для метода DpToSp
+func BenchmarkDpToSp(b *testing.B) {
+	metric := NewMetric(2.0, 2.0)
+	for i := 0; i < b.N; i++ {
+		metric.DpToSp(Dp(10))
+	}
+}
