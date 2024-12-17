@@ -24,7 +24,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/MiCkEyZzZ/pxconv/pxconv"
+	"github.com/MiCkEyZzZ/pxconv"
 )
 
 func main() {
@@ -36,7 +36,7 @@ func main() {
 ## API
 
 Пакет предоставляет следующие основные методы для преобразования между dp, sp, px, inch и mm.
-Подробности в [документации](./pxconv/doc.go).
+Подробности в [документации](./doc.go).
 
 ## Лицензия
 
