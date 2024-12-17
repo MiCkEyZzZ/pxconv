@@ -239,9 +239,89 @@ func TestConstructorWithValidValues(t *testing.T) {
 	}
 }
 
+// TestInchToPx проверяет преобразование дюймов в пиксели.
+func TestInchToPx(t *testing.T) {
+	m := Metric{Dpi: 96}
+	tests := []struct {
+		inch     Inch
+		expected int
+	}{
+		{1, 96},
+		{0, 0},
+		{2.5, 240},
+	}
+
+	for _, test := range tests {
+		res := m.InchToPx(test.inch)
+		if res != test.expected {
+			t.Errorf("InchToPx(%v) = %v; expected %v", test.inch, res, test.expected)
+		}
+	}
+}
+
+// TestMmToPx проверяет преобразование миллиметров в пиксели.
+func TestMmToPx(t *testing.T) {
+	m := Metric{Dpi: 96}
+	tests := []struct {
+		mm       Mm
+		expected int
+	}{
+		{MmPerInch, 96}, // 25.4 мм = 1 дюйм = 96 пикселей
+		{0, 0},
+		{50.8, 192}, // 50.8 мм = 2 дюйма
+	}
+
+	for _, test := range tests {
+		res := m.MmToPx(test.mm)
+		if res != test.expected {
+			t.Errorf("MmToPx(%v) = %v; expected %v", test.mm, res, test.expected)
+		}
+	}
+}
+
+// TestPxToInch проверяет преобразование пикселей в дюймы.
+func TestPxToInch(t *testing.T) {
+	m := Metric{Dpi: 96}
+	tests := []struct {
+		px       int
+		expected Inch
+	}{
+		{96, 1},
+		{0, 0},
+		{192, 2},
+	}
+
+	for _, test := range tests {
+		res := m.PxToInch(test.px)
+		if res != test.expected {
+			t.Errorf("PxToInch(%v) = %v; expected %v", test.px, res, test.expected)
+		}
+	}
+}
+
+// TestPxToMm проверяет преобразование пикселей в миллиметры.
+func TestPxToMm(t *testing.T) {
+	m := Metric{Dpi: 96}
+	tests := []struct {
+		px       int
+		expected Mm
+	}{
+		{96, MmPerInch}, // 96 пикселей = 25.4 мм
+		{0, 0},
+		{192, 50.8}, // 192 пикселя = 50.8 мм
+	}
+
+	for _, test := range tests {
+		res := m.PxToMm(test.px)
+		if res != test.expected {
+			t.Errorf("PxToMm(%v) = %v; expected %v", test.px, res, test.expected)
+		}
+	}
+}
+
 //------------------------------------ Бенчмарки ------------------------------------
 
-// Бенчмарк для метода DpToPx
+// BenchmarkDpToPx бенчмарк для метода DpToPx.
 func BenchmarkDpToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -249,7 +329,7 @@ func BenchmarkDpToPx(b *testing.B) {
 	}
 }
 
-// Бенчмарк для метода SpToPx
+// BenchmarkSpToPx бенчмарк для метода SpToPx.
 func BenchmarkSpToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -257,7 +337,7 @@ func BenchmarkSpToPx(b *testing.B) {
 	}
 }
 
-// Бенчмарк для метода PxToDp
+// BenchmarkPxToDp бенчмарк для метода PxToDp.
 func BenchmarkPxToDp(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -265,10 +345,42 @@ func BenchmarkPxToDp(b *testing.B) {
 	}
 }
 
-// Бенчмарк для метода DpToSp
+// BenchmarkDpToSp бенчмарк для метода DpToSp.
 func BenchmarkDpToSp(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
 		metric.DpToSp(Dp(10))
+	}
+}
+
+// BenchmarkInchToPx бенчмарк для метода InchToPx.
+func BenchmarkInchToPx(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.InchToPx(Inch(1.0))
+	}
+}
+
+// BenchmarkMmToPx бенчмарк для метода MmToPx.
+func BenchmarkMmToPx(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.MmToPx(Mm(25.4))
+	}
+}
+
+// BenchmarkPxToInch бенчмарк для метода PxToInch.
+func BenchmarkPxToInch(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.PxToInch(96)
+	}
+}
+
+// BenchmarkPxToMm бенчмарк для метода PxToMm
+func BenchmarkPxToMm(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.PxToMm(96)
 	}
 }
