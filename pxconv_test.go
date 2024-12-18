@@ -1,6 +1,9 @@
 package pxconv
 
-import "testing"
+import (
+	"sync"
+	"testing"
+)
 
 // TestDpToPx проверяет, правильно ли округляется значение dp в пиксели.
 func TestDpToPx(t *testing.T) {
@@ -315,6 +318,98 @@ func TestPxToMm(t *testing.T) {
 		res := m.PxToMm(test.px)
 		if res != test.expected {
 			t.Errorf("PxToMm(%v) = %v; expected %v", test.px, res, test.expected)
+		}
+	}
+}
+
+// TestDpToPxMaxValue стресс-тесты.
+func TestDpToPxMaxValue(t *testing.T) {
+	m := Metric{PxPerDp: 2}
+	maxValue := Dp(1e6)
+	expected := 2 * int(maxValue)
+	result := m.DpToPx(maxValue)
+
+	if result != expected {
+		t.Errorf("DpToPx(%v) = %v; expected %v", maxValue, result, expected)
+	}
+}
+
+// TestPxToDpMaxValue стресс-тесты.
+func TestPxToDpMaxValue(t *testing.T) {
+	m := Metric{PxPerDp: 2}
+	maxValue := 1e6
+	expected := Dp(maxValue / 2)
+	result := m.PxToDp(int(maxValue))
+
+	if result != expected {
+		t.Errorf("PxToDp(%v) = %v; expected %v", maxValue, result, expected)
+	}
+}
+
+// TestDpToPxConcurrency тесты на конкурентность.
+func TestDpToPxConcurrency(t *testing.T) {
+	m := Metric{PxPerDp: 2}
+	var wg sync.WaitGroup
+	n := 1000
+	wg.Add(n)
+
+	for i := 0; i < n; i++ {
+		go func(dp Dp) {
+			defer wg.Done()
+			res := m.DpToPx(dp)
+			if res != int(dp)*2 {
+				t.Errorf("Concurrency error: DpToPx(%v) = %v; expected %v", dp, res, int(dp)*2)
+			}
+		}(Dp(i))
+	}
+	wg.Wait()
+}
+
+// TestDpToPxLoad нагрузочное тестирование.
+func TestDpToPxLoad(t *testing.T) {
+	m := Metric{PxPerDp: 2}
+	iterations := 1e6
+
+	for i := 0; i < int(iterations); i++ {
+		res := m.DpToPx(Dp(i))
+		if res != i*2 {
+			t.Errorf("Load test error: DpToPx(%v) = %v; expected %v", i, res, i*2)
+		}
+	}
+}
+
+// TestDpToPxToDpConsistency на обратимость.
+func TestDpToPxToDpConsistency(t *testing.T) {
+	m := Metric{PxPerDp: 2}
+	tests := []Dp{0, 1, 2, 100, 1e6}
+
+	for _, dp := range tests {
+		px := m.DpToPx(dp)
+		resDp := m.PxToDp(px)
+		if resDp != dp {
+			t.Errorf("Inconsistency error: PxToDp(DpToPx(%v)) = %v; expected %v", dp, resDp, dp)
+		}
+	}
+}
+
+// TestDpToPxRounding на округление.
+func TestDpToPxRounding(t *testing.T) {
+	m := Metric{PxPerDp: 2}
+	tests := []struct {
+		dp       Dp
+		expected int
+	}{
+		{0.4, 1},
+		{0.5, 1},
+		{0.6, 1},
+		{1.4, 3},
+		{1.5, 3},
+	}
+
+	for _, test := range tests {
+		res := m.DpToPx(test.dp)
+		if res != test.expected {
+			t.Errorf("DpToPx(%v) = %v; expected %v", test.dp, res, test.expected)
 		}
 	}
 }

@@ -58,10 +58,39 @@ func BenchmarkPxToInch(b *testing.B) {
 	}
 }
 
-// BenchmarkPxToMm бенчмарк для метода PxToMm.
+// BenchmarkPxToMm бенчмарк для метода PxToMm
 func BenchmarkPxToMm(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
 		metric.PxToMm(96)
 	}
+}
+
+// BenchmarkDpToPxLargeValue бенчмарк для больших значений.
+func BenchmarkDpToPxLargeValue(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.DpToPx(Dp(1_000_000))
+	}
+}
+
+// BenchmarkMethodsInSequence бенчмарк последовательного вызова метода.
+func BenchmarkMethodsInSequence(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = metric.DpToPx(Dp(10))
+		_ = metric.PxToDp(50)
+		_ = metric.SpToPx(Sp(15))
+	}
+}
+
+// BenchmarkDpToPxParallel бенчмарк тестирует многопоточность.
+func BenchmarkDpToPxParallel(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			metric.DpToPx(Dp(10))
+		}
+	})
 }
