@@ -5,8 +5,9 @@ import (
 )
 
 const (
-	DefaultDpi = 96   // Стандартное значение DPI для большинства дисплеев.
-	MmPerInch  = 25.4 // Количество миллиметров в одном дюйме, константа для вычислений.
+	DefaultDpi    = 96   // Стандартное значение DPI для большинства дисплеев.
+	MmPerInch     = 25.4 // Количество миллиметров в одном дюйме, константа для вычислений.
+	PointsPerInch = 72   // Количество пунктов в одном дюйме.
 )
 
 // Dp — единицы, независимые от устройства, для измерения расстояний на экране.
@@ -20,6 +21,9 @@ type Inch float32
 
 // Mm — единица измерения для миллиметров.
 type Mm float32
+
+// Pt — единица измерения для пунктов.
+type Pt float32
 
 // Metric используется для конвертации независимых экранных единиц (dp, sp) в пиксели (px).
 type Metric struct {
@@ -96,6 +100,17 @@ func (c Metric) PxToInch(value int) Inch {
 // Например, при DPI = 96 и значении 96 пикселей, результат будет равен 25.4 мм.
 func (c Metric) PxToMm(value int) Mm {
 	return Mm(float32(value) * MmPerInch / c.Dpi)
+}
+
+// PtToPx м-д конвертирует значение пунктов (pt) в пиксели (px), используя DPI
+// Например, при DPI = 96, PtToPx(72) вернёт 96.
+func (c Metric) PtToPx(value Pt) int {
+	return int(math.Round(float64(value) * float64(c.Dpi) / PointsPerInch))
+}
+
+// PxToPt м-д конвертирует значение пикселей (px) в пункты (pt), используя DPI
+func (c Metric) PxToPt(value int) Pt {
+	return Pt(float32(value) * PointsPerInch / c.Dpi)
 }
 
 // GetDensity м-д возвращает текущие значения плотности (PxPerDp и PxPerSp).

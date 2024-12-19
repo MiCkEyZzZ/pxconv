@@ -94,3 +94,55 @@ func BenchmarkDpToPxParallel(b *testing.B) {
 		}
 	})
 }
+
+// BenchmarkPtToPx бенчмарк для метода PtToPx.
+func BenchmarkPtToPx(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.PtToPx(Pt(12))
+	}
+}
+
+// BenchmarkPxToPt бенчмарк для метода PxToPt.
+func BenchmarkPxToPt(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.PxToPt(96)
+	}
+}
+
+// BenchmarkPtToPxLargeValue бенчмарк для метода PxToPx с большим значением.
+func BenchmarkPtToPxLargeValue(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.PtToPx(Pt(1_000))
+	}
+}
+
+// BenchmarkPxToPtLargeValue бенчмарк для метода PxToPt с большими значениями.
+func BenchmarkPxToPtLargeValue(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	for i := 0; i < b.N; i++ {
+		metric.PxToPt(10_000)
+	}
+}
+
+// BenchmarkPtToPxParallel бенчмарк тестирует многопоточность метода PtToPx.
+func BenchmarkPtToPxParallel(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			metric.PtToPx(Pt(12))
+		}
+	})
+}
+
+// BenchmarkPxToPtParallel бенчмарк тестирует многопоточность метода PxToPt.
+func BenchmarkPxToPtParallel(b *testing.B) {
+	metric := NewMetric(2.0, 2.0, 96)
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			metric.PxToPt(96)
+		}
+	})
+}

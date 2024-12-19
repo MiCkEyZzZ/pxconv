@@ -413,3 +413,43 @@ func TestDpToPxRounding(t *testing.T) {
 		}
 	}
 }
+
+// TestPtToPx проверяет преобразование пунктов (pt) в пиксели (px).
+func TestPtToPx(t *testing.T) {
+	m := Metric{Dpi: 96}
+	tests := []struct {
+		pt       Pt
+		expected int
+	}{
+		{72, 96}, // 72 pt = 96 px при DPI = 96
+		{0, 0},   // 0 pt = 0 px
+		{36, 48}, // 36 pt = 48 px при DPI = 96
+	}
+
+	for _, test := range tests {
+		res := m.PtToPx(test.pt)
+		if res != test.expected {
+			t.Errorf("PtToPx(%v) = %v; expected %v", test.pt, res, test.expected)
+		}
+	}
+}
+
+// TestPxToPt проверяет преобразование пикселей (px) в пункты (pt).
+func TestPxToPt(t *testing.T) {
+	m := Metric{Dpi: 96}
+	tests := []struct {
+		px       int
+		expected Pt
+	}{
+		{96, 72}, // 96 px = 72 pt при DPI = 96
+		{0, 0},   // 0 px = 0 pt
+		{48, 36}, // 48 px = 36 pt при DPI = 96
+	}
+
+	for _, test := range tests {
+		res := m.PxToPt(test.px)
+		if res != test.expected {
+			t.Errorf("PxToPt(%v) = %v; expected %v", test.px, res, test.expected)
+		}
+	}
+}
