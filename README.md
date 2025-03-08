@@ -1,5 +1,7 @@
 # pxconv — Конвертер экранных единиц (dp, sp, px, inch, mm, pt)
 
+[![godoc](https://godoc.org/github.com/go-pkgz/pxconv?status.svg)](https://pkg.go.dev/github.com/MiCkEyZzZ/pxconv?tab=doc)
+
 `pxconv` — пакет на Go для работы с экранными единицами измерения
 (`dp`, `sp`, `px`, `inch`, `mm`, `pt`) с учётом плотности экрана.
 
