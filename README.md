@@ -1,28 +1,28 @@
-# pxconv — Конвертер экранных единиц (dp, sp, px, inch, mm, pt)
+# pxconv — Screen Unit Converter (dp, sp, px, inch, mm, pt)
 
 [![godoc](https://godoc.org/github.com/MiCkEyZzZ/pxconv?status.svg)](https://pkg.go.dev/github.com/MiCkEyZzZ/pxconv?tab=doc)
 
-`pxconv` — пакет на Go для работы с экранными единицами измерения
-(`dp`, `sp`, `px`, `inch`, `mm`, `pt`) с учётом плотности экрана.
+`pxconv` is a Go package for working with screen units of measurement (dp, sp, px, inch, mm, pt), considering screen density.
 
-## Особенности
 
-- **Поддержка основных единиц**: `dp`, `sp`, `px`, `inch`, `mm`, `pt`.
-- **Настраиваемая плотность экрана**: параметры `PxPerDp`, `PxPerSp`, и `Dpi`.
-- **Конвертация единиц**: удобные методы для преобразования между всеми поддерживаемыми единицами.
-- **Обработка некорректных значений**: замена на стандартные значения (по умолчанию `1`) для предотвращения ошибок.
+## Features
 
-## Установка
+- **Support for main units**: `dp`, `sp`, `px`, `inch`, `mm`, `pt`.
+- **Customizable screen density**: parameters `PxPerDp`, `PxPerSp`, и `Dpi`.
+- **Unit conversion**: convenient methods for converting between all supported units.
+- **Handling of invalid values**: default replacement (1 by default) to prevent errors.
 
-Для установки пакета используйте команду:
+## Installation
+
+To install the package, use the following command:
 
 ```zsh
 go get github.com/MiCkEyZzZ/pxconv
 ```
 
-## Пример использования
+## Usage Example
 
-Ниже приведён пример работы с пакетом:
+Here is an example of how to use the package:
 
 ```go
 package main
@@ -34,33 +34,32 @@ import (
 )
 
 func main() {
-	// Создаём экземпляр Metric с настройками плотности
+	// Create an instance of Metric with custom density settings
 	m := pxconv.Metric{PxPerDp: 2, PxPerSp: 1.5, Dpi: 96}
 
-	// Преобразуем 10 dp в пиксели
+	// Convert 10 dp to pixels
 	px := m.DpToPx(pxconv.Dp(10))
-	fmt.Println(px) // Вывод: 20
+	fmt.Println(px) // Output: 20
 }
 ```
 
 ## API
 
-Пакет предоставляет следующие ключевые методы для преобразования единиц измерения:
+The package provides the following key methods for unit conversions:
 
-- DpToPx — преобразование dp в px.
-- PxToDp — преобразование px в dp.
-- SpToPx — преобразование sp в px.
-- PxToSp — преобразование px в sp.
-- InchToPx — преобразование дюймов в px.
-- PxToInch — преобразование px в дюймы.
-- MmToPx — преобразование миллиметров в px.
-- PxToMm — преобразование px в миллиметры.
-- PtToPx — преобразование пунктов в px.
-- PxToPt — преобразование px в пункты.
+- DpToPx — Convert dp to px.
+- PxToDp — Convert px to dp.
+- SpToPx — Convert sp to px.
+- PxToSp — Convert px to sp.
+- InchToPx — Convert inches to px.
+- PxToInch — Convert px to inches.
+- MmToPx — Convert millimeters to px.
+- PxToMm — Convert px to millimeters.
+- PtToPx — Convert points to px.
+- PxToPt — Convert px to points.
 
-Полный список методов и их описание можно найти в [документации](https://pkg.go.dev/github.com/MiCkEyZzZ/pxconv).
+A full list of methods and their descriptions can be found in the [documentation](https://pkg.go.dev/github.com/MiCkEyZzZ/pxconv).
 
-## Лицензия
+## License
 
-Этот пакет распространяется под лицензией MIT. Полный текст лицензии доступен в
-файле [ЛИЦЕНЗИЯ](./LICENSE).
+This package is distributed under the MIT License. A full copy of the license is available in the [License](./LICENSE) file.
