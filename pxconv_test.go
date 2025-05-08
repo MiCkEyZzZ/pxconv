@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// TestDpToPx проверяет, правильно ли округляется значение dp в пиксели.
+// TestDpToPx checks if the dp value is correctly rounded to pixels.
 func TestDpToPx(t *testing.T) {
 	m := Metric{PxPerDp: 2}
 	tests := []struct {
@@ -25,7 +25,7 @@ func TestDpToPx(t *testing.T) {
 	}
 }
 
-// TestSpToPx проверяет, правильно ли округляется значение sp в пиксели.
+// TestSpToPx checks if the sp value is correctly rounded to pixels.
 func TestSpToPx(t *testing.T) {
 	m := Metric{PxPerSp: 4}
 	tests := []struct {
@@ -45,7 +45,7 @@ func TestSpToPx(t *testing.T) {
 	}
 }
 
-// TestDpToSp проверяет корректность преобразования из dp в sp.
+// TestDpToSp checks if dp is correctly converted to sp.
 func TestDpToSp(t *testing.T) {
 	m := Metric{PxPerDp: 2, PxPerSp: 4}
 	tests := []struct {
@@ -65,7 +65,7 @@ func TestDpToSp(t *testing.T) {
 	}
 }
 
-// TestSpToDp проверяет корректность преобразования из sp в dp.
+// TestSpToDp checks if sp is correctly converted to dp.
 func TestSpToDp(t *testing.T) {
 	m := Metric{PxPerDp: 2, PxPerSp: 4}
 	tests := []struct {
@@ -85,7 +85,7 @@ func TestSpToDp(t *testing.T) {
 	}
 }
 
-// TestPxToDp проверяет корректность преобразования из px в dp.
+// TestPxToDp checks if px is correctly converted to dp.
 func TestPxToDp(t *testing.T) {
 	m := Metric{PxPerDp: 2}
 	tests := []struct {
@@ -105,7 +105,7 @@ func TestPxToDp(t *testing.T) {
 	}
 }
 
-// TestPxToSp проверяет корректность преобразования из px в sp.
+// TestPxToSp checks if px is correctly converted to sp.
 func TestPxToSp(t *testing.T) {
 	m := Metric{PxPerSp: 4}
 	tests := []struct {
@@ -125,7 +125,7 @@ func TestPxToSp(t *testing.T) {
 	}
 }
 
-// TestEnsurePositiveDefault проверяет, что значения по умолчанию применяются корректно.
+// TestEnsurePositiveDefault checks if default values are applied correctly.
 func TestEnsurePositiveDefault(t *testing.T) {
 	m := Metric{PxPerDp: 0, PxPerSp: -5}
 	if res := m.DpToPx(2); res != 2 {
@@ -136,7 +136,7 @@ func TestEnsurePositiveDefault(t *testing.T) {
 	}
 }
 
-// TestRounding проверяет корректность округления значений.
+// TestRounding checks the correctness of rounding values.
 func TestRounding(t *testing.T) {
 	m := Metric{PxPerDp: 2, PxPerSp: 3}
 	tests := []struct {
@@ -156,7 +156,7 @@ func TestRounding(t *testing.T) {
 	}
 }
 
-// TestExtremeValues проверяет работу с экстремальными значениями.
+// TestExtremeValues tests handling extreme values.
 func TestExtremeValues(t *testing.T) {
 	m := Metric{PxPerDp: 1000, PxPerSp: 0.001}
 	tests := []struct {
@@ -164,7 +164,7 @@ func TestExtremeValues(t *testing.T) {
 		expected int
 	}{
 		{dp: Dp(1000000), expected: 1000000000}, // 1000000 * 1000
-		{dp: Dp(0.000001), expected: 0},         // 0.000001 * 1000 округляется до 0
+		{dp: Dp(0.000001), expected: 0},         // 0.000001 * 1000 rounds to 0
 	}
 
 	for _, test := range tests {
@@ -175,7 +175,7 @@ func TestExtremeValues(t *testing.T) {
 	}
 }
 
-// TestConsistency проверяет согласованность преобразований DpToSp и SpToDp.
+// TestConsistency checks consistency between DpToSp and SpToDp conversions.
 func TestConsistency(t *testing.T) {
 	m := Metric{PxPerDp: 2, PxPerSp: 4}
 	dp := Dp(2)
@@ -187,7 +187,7 @@ func TestConsistency(t *testing.T) {
 	}
 }
 
-// TestBoundaryRounding проверяет округление значений на гарнице.
+// TestBoundaryRounding tests rounding at boundaries.
 func TestBoundaryRounding(t *testing.T) {
 	m := Metric{PxPerDp: 1.0}
 	tests := []struct {
@@ -206,7 +206,7 @@ func TestBoundaryRounding(t *testing.T) {
 	}
 }
 
-// TestNegativeValues проверяет, что при передаче отрицательных значений в NewMetric, они заменяются на 1.
+// TestNegativeValues checks that negative values in NewMetric are replaced by 1.
 func TestNegativeValues(t *testing.T) {
 	m := NewMetric(-10, -5, 96)
 
@@ -218,7 +218,7 @@ func TestNegativeValues(t *testing.T) {
 	}
 }
 
-// TestZeroValues проверяет, что нулевые значения заменяются на 1 в NewMetric.
+// TestZeroValues checks that zero values in NewMetric are replaced by 1.
 func TestZeroValues(t *testing.T) {
 	m := NewMetric(0, 0, 96)
 
@@ -230,7 +230,7 @@ func TestZeroValues(t *testing.T) {
 	}
 }
 
-// TestConstructorWithValidValues проверяет, что корректные значения не изменяются в NewMetric.
+// TestConstructorWithValidValues checks that valid values are not altered in NewMetric.
 func TestConstructorWithValidValues(t *testing.T) {
 	m := NewMetric(2, 3, 96)
 
@@ -242,7 +242,7 @@ func TestConstructorWithValidValues(t *testing.T) {
 	}
 }
 
-// TestInchToPx проверяет преобразование дюймов в пиксели.
+// TestInchToPx checks conversion from inches to pixels.
 func TestInchToPx(t *testing.T) {
 	m := Metric{Dpi: 96}
 	tests := []struct {
@@ -262,16 +262,16 @@ func TestInchToPx(t *testing.T) {
 	}
 }
 
-// TestMmToPx проверяет преобразование миллиметров в пиксели.
+// TestMmToPx checks conversion from millimeters to pixels.
 func TestMmToPx(t *testing.T) {
 	m := Metric{Dpi: 96}
 	tests := []struct {
 		mm       Mm
 		expected int
 	}{
-		{MmPerInch, 96}, // 25.4 мм = 1 дюйм = 96 пикселей
+		{MmPerInch, 96}, // 25.4 mm = 1 inch = 96 pixels
 		{0, 0},
-		{50.8, 192}, // 50.8 мм = 2 дюйма
+		{50.8, 192}, // 50.8 mm = 2 inches
 	}
 
 	for _, test := range tests {
@@ -282,7 +282,7 @@ func TestMmToPx(t *testing.T) {
 	}
 }
 
-// TestPxToInch проверяет преобразование пикселей в дюймы.
+// TestPxToInch checks conversion from pixels to inches.
 func TestPxToInch(t *testing.T) {
 	m := Metric{Dpi: 96}
 	tests := []struct {
@@ -302,16 +302,16 @@ func TestPxToInch(t *testing.T) {
 	}
 }
 
-// TestPxToMm проверяет преобразование пикселей в миллиметры.
+// TestPxToMm checks conversion from pixels to millimeters.
 func TestPxToMm(t *testing.T) {
 	m := Metric{Dpi: 96}
 	tests := []struct {
 		px       int
 		expected Mm
 	}{
-		{96, MmPerInch}, // 96 пикселей = 25.4 мм
+		{96, MmPerInch}, // 96 pixels = 25.4 mm
 		{0, 0},
-		{192, 50.8}, // 192 пикселя = 50.8 мм
+		{192, 50.8}, // 192 pixels = 50.8 mm
 	}
 
 	for _, test := range tests {
@@ -322,7 +322,7 @@ func TestPxToMm(t *testing.T) {
 	}
 }
 
-// TestDpToPxMaxValue стресс-тесты.
+// TestDpToPxMaxValue stress test.
 func TestDpToPxMaxValue(t *testing.T) {
 	m := Metric{PxPerDp: 2}
 	maxValue := Dp(1e6)
@@ -334,7 +334,7 @@ func TestDpToPxMaxValue(t *testing.T) {
 	}
 }
 
-// TestPxToDpMaxValue стресс-тесты.
+// TestPxToDpMaxValue stress test.
 func TestPxToDpMaxValue(t *testing.T) {
 	m := Metric{PxPerDp: 2}
 	maxValue := 1e6
@@ -346,7 +346,7 @@ func TestPxToDpMaxValue(t *testing.T) {
 	}
 }
 
-// TestDpToPxConcurrency тесты на конкурентность.
+// TestDpToPxConcurrency concurrency test.
 func TestDpToPxConcurrency(t *testing.T) {
 	m := Metric{PxPerDp: 2}
 	var wg sync.WaitGroup
@@ -365,7 +365,7 @@ func TestDpToPxConcurrency(t *testing.T) {
 	wg.Wait()
 }
 
-// TestDpToPxLoad нагрузочное тестирование.
+// TestDpToPxLoad load testing.
 func TestDpToPxLoad(t *testing.T) {
 	m := Metric{PxPerDp: 2}
 	iterations := 1e6
@@ -378,7 +378,7 @@ func TestDpToPxLoad(t *testing.T) {
 	}
 }
 
-// TestDpToPxToDpConsistency на обратимость.
+// TestDpToPxToDpConsistency checks the reversibility of the conversion between dp and px.
 func TestDpToPxToDpConsistency(t *testing.T) {
 	m := Metric{PxPerDp: 2}
 	tests := []Dp{0, 1, 2, 100, 1e6}
@@ -392,7 +392,7 @@ func TestDpToPxToDpConsistency(t *testing.T) {
 	}
 }
 
-// TestDpToPxRounding на округление.
+// TestDpToPxRounding checks the rounding behavior during the conversion from dp to px.
 func TestDpToPxRounding(t *testing.T) {
 	m := Metric{PxPerDp: 2}
 	tests := []struct {
@@ -414,7 +414,7 @@ func TestDpToPxRounding(t *testing.T) {
 	}
 }
 
-// TestPtToPx проверяет преобразование пунктов (pt) в пиксели (px).
+// TestPtToPx checks the conversion from points (pt) to pixels (px).
 func TestPtToPx(t *testing.T) {
 	m := Metric{Dpi: 96}
 	tests := []struct {
@@ -434,7 +434,7 @@ func TestPtToPx(t *testing.T) {
 	}
 }
 
-// TestPxToPt проверяет преобразование пикселей (px) в пункты (pt).
+// TestPxToPt checks the conversion from pixels (px) to points (pt).
 func TestPxToPt(t *testing.T) {
 	m := Metric{Dpi: 96}
 	tests := []struct {

@@ -5,38 +5,38 @@ import (
 )
 
 const (
-	DefaultDpi    = 96   // Стандартное значение DPI для большинства дисплеев.
-	MmPerInch     = 25.4 // Количество миллиметров в одном дюйме, константа для вычислений.
-	PointsPerInch = 72   // Количество пунктов в одном дюйме.
+	DefaultDpi    = 96   // Default DPI value for most displays.
+	MmPerInch     = 25.4 // Number of millimeters in one inch, used for conversions.
+	PointsPerInch = 72   // Number of points in one inch.
 )
 
-// Dp — единицы, независимые от устройства, для измерения расстояний на экране.
+// Dp represents device-independent pixels used for measuring distances on the screen.
 type Dp float32
 
-// Sp — единицы, независимые от устройства, для измерения шрифтов.
+// Sp represents scale-independent pixels used for measuring font sizes.
 type Sp float32
 
-// Inch — единица измерения для дюймов
+// Inch represents inches as a unit of measurement.
 type Inch float32
 
-// Mm — единица измерения для миллиметров.
+// Mm represents millimeters as a unit of measurement.
 type Mm float32
 
-// Pt — единица измерения для пунктов.
+// Pt represents points as a typographic unit.
 type Pt float32
 
-// Metric используется для конвертации независимых экранных единиц (dp, sp) в пиксели (px).
+// Metric is used to convert screen-independent units (dp, sp) to physical pixels (px).
 type Metric struct {
-	// PxPerDp - количество пикселей на один dp.
+	// PxPerDp - number of pixels per dp unit.
 	PxPerDp float32
-	// PxPerSp - количество пикселей на один sp.
+	// PxPerSp - number of pixels per sp unit.
 	PxPerSp float32
-	// Dpi - количество пикселей на дюйм.
+	// Dpi - screen density in dots per inch.
 	Dpi float32
 }
 
-// NewMetric создаёт новый экземпляр Metric, проверяя входные значения на корректность.
-// Если переданы нулевые или отрицательные значения, они будут заменены на 1.
+// NewMetric creates a new Metric instance, validating input values.
+// If any of the values are zero or negative, they are replaced with 1.
 func NewMetric(pxPerDp, pxPerSp, dpi float32) Metric {
 	if dpi <= 0 {
 		dpi = DefaultDpi
@@ -48,91 +48,90 @@ func NewMetric(pxPerDp, pxPerSp, dpi float32) Metric {
 	}
 }
 
-// DpToPx м-д конвертирует значение dp в пиксели (px), округляя до ближайшего целого числа.
+// DpToPx converts a dp value to pixels, rounding to the nearest integer.
 func (c Metric) DpToPx(value Dp) int {
 	return int(math.Round(float64(ensurePositive(c.PxPerDp)) * float64(value)))
 }
 
-// SpToPx м-д конвертирует значение sp в пиксели (px), округляя до ближайшего целого числа.
+// SpToPx converts an sp value to pixels, rounding to the nearest integer.
 func (c Metric) SpToPx(value Sp) int {
 	return int(math.Round(float64(ensurePositive(c.PxPerSp)) * float64(value)))
 }
 
-// DpToSp м-д конвертирует значение dp в sp, используя плотности для dp и sp.
+// DpToSp converts a dp value to sp, using the current density values.
 func (c Metric) DpToSp(value Dp) Sp {
 	return Sp(float32(value) * ensurePositive(c.PxPerDp) / ensurePositive(c.PxPerSp))
 }
 
-// SpToDp м-д конвертирует значение sp в dp, используя плотности для dp и sp.
+// SpToDp converts an sp value to dp, using the current density values.
 func (c Metric) SpToDp(value Sp) Dp {
 	return Dp(float32(value) * ensurePositive(c.PxPerSp) / ensurePositive(c.PxPerDp))
 }
 
-// PxToDp м-д конвертирует значение пикселей (px) в dp.
+// PxToDp converts a pixel value to dp.
 func (c Metric) PxToDp(value int) Dp {
 	return Dp(float32(value) / ensurePositive(c.PxPerDp))
 }
 
-// PxToSp м-д конвертирует значение пикселей (px) в sp.
+// PxToSp converts a pixel value to sp.
 func (c Metric) PxToSp(value int) Sp {
 	return Sp(float32(value) / ensurePositive(c.PxPerSp))
 }
 
-// InchToPx м-д конвертирует значение инчи (inch) в пиксели (px), используя DPI
-// Например, при DPI = 96, InchToPx(1) вернёт 96.
+// InchToPx converts inches to pixels using the current DPI.
+// For example, with DPI = 96, InchToPx(1) returns 96.
 func (c Metric) InchToPx(value Inch) int {
 	return int(math.Round(float64(value) * float64(c.Dpi)))
 }
 
-// MmToPx м-д конвертирует значение миллиметры (mm) в пиксели (px), используя DPI.
-// Например, при DPI = 96 и MmToPx(25.4), результат будет равен 96.
+// MmToPx converts millimeters to pixels using the current DPI.
+// For example, with DPI = 96 and MmToPx(25.4), the result is 96.
 func (c Metric) MmToPx(value Mm) int {
 	return int(math.Round(float64(value) * float64(c.Dpi) / MmPerInch))
 }
 
-// PxToInch м-д конвертирует значение пикселей (px) в инчи (inch), используя DPI.
-// Например, при DPI = 96 и значении 96 пикселей, результат будет равен 1 дюйму.
+// PxToInch converts pixels to inches using the current DPI.
+// For example, with DPI = 96 and 96 pixels, the result is 1 inch.
 func (c Metric) PxToInch(value int) Inch {
 	return Inch(float32(value) / c.Dpi)
 }
 
-// PxToMm м-д конвертирует значение пикселей (px) в миллиметры (mm), используя DPI
-// Например, при DPI = 96 и значении 96 пикселей, результат будет равен 25.4 мм.
+// PxToMm converts pixels to millimeters using the current DPI.
+// For example, with DPI = 96 and 96 pixels, the result is 25.4 mm.
 func (c Metric) PxToMm(value int) Mm {
 	return Mm(float32(value) * MmPerInch / c.Dpi)
 }
 
-// PtToPx м-д конвертирует значение пунктов (pt) в пиксели (px), используя DPI
-// Например, при DPI = 96, PtToPx(72) вернёт 96.
+// PtToPx converts points to pixels using the current DPI.
+// For example, with DPI = 96, PtToPx(72) returns 96.
 func (c Metric) PtToPx(value Pt) int {
 	return int(math.Round(float64(value) * float64(c.Dpi) / PointsPerInch))
 }
 
-// PxToPt м-д конвертирует значение пикселей (px) в пункты (pt), используя DPI
+// PxToPt converts pixels to points using the current DPI.
 func (c Metric) PxToPt(value int) Pt {
 	return Pt(float32(value) * PointsPerInch / c.Dpi)
 }
 
-// GetDensity м-д возвращает текущие значения плотности (PxPerDp и PxPerSp).
-// Используется для проверки или отладки текущих коэффициентов плотности.
-// Не включает DPI.
+// GetDensity returns the current density values (PxPerDp and PxPerSp).
+// Useful for inspecting or debugging density coefficients. DPI is not included.
 func (c Metric) GetDensity() (float32, float32) {
 	return c.PxPerDp, c.PxPerSp
 }
 
-// ScaleByDpi масштабирует текущие плотности (PxPerDp, PxPerSp и Dpi)
-// на указанный коэффициент. Изменяет состояние объекта Metric.
+// ScaleByDpi scales the current densities (PxPerDp, PxPerSp, and Dpi)
+// by the given factor. Modifies the Metric instance in place.
 func (c *Metric) ScaleByDpi(scale float32) {
 	if scale <= 0 {
-		scale = 1 // Предотвращение ошибок при некорректном масштабировании.
+		scale = 1 // Prevents errors from invalid scaling factors.
 	}
 	c.PxPerDp *= scale
 	c.PxPerSp *= scale
 	c.Dpi *= scale
 }
 
-// ensurePositive ф-я возвращает положительное значение. Если входное
-// значение 0 или меньше, возвращает 1.
+// ensurePositive returns a positive value.
+// If the input is zero or negative, it returns 1.
 func ensurePositive(value float32) float32 {
 	if value <= 0 {
 		return 1

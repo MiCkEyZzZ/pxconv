@@ -2,7 +2,7 @@ package pxconv
 
 import "testing"
 
-// BenchmarkDpToPx бенчмарк для метода DpToPx.
+// BenchmarkDpToPx benchmarks the DpToPx method.
 func BenchmarkDpToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -10,7 +10,7 @@ func BenchmarkDpToPx(b *testing.B) {
 	}
 }
 
-// BenchmarkSpToPx бенчмарк для метода SpToPx.
+// BenchmarkSpToPx benchmarks the SpToPx method.
 func BenchmarkSpToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -18,7 +18,7 @@ func BenchmarkSpToPx(b *testing.B) {
 	}
 }
 
-// BenchmarkPxToDp бенчмарк для метода PxToDp.
+// BenchmarkPxToDp benchmarks the PxToDp method.
 func BenchmarkPxToDp(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -26,7 +26,7 @@ func BenchmarkPxToDp(b *testing.B) {
 	}
 }
 
-// BenchmarkDpToSp бенчмарк для метода DpToSp.
+// BenchmarkDpToSp benchmarks the DpToSp method.
 func BenchmarkDpToSp(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -34,7 +34,7 @@ func BenchmarkDpToSp(b *testing.B) {
 	}
 }
 
-// BenchmarkInchToPx бенчмарк для метода InchToPx.
+// BenchmarkInchToPx benchmarks the InchToPx method.
 func BenchmarkInchToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -42,7 +42,7 @@ func BenchmarkInchToPx(b *testing.B) {
 	}
 }
 
-// BenchmarkMmToPx бенчмарк для метода MmToPx.
+// BenchmarkMmToPx benchmarks the MmToPx method.
 func BenchmarkMmToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -50,7 +50,7 @@ func BenchmarkMmToPx(b *testing.B) {
 	}
 }
 
-// BenchmarkPxToInch бенчмарк для метода PxToInch.
+// BenchmarkPxToInch benchmarks the PxToInch method.
 func BenchmarkPxToInch(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -58,7 +58,7 @@ func BenchmarkPxToInch(b *testing.B) {
 	}
 }
 
-// BenchmarkPxToMm бенчмарк для метода PxToMm
+// BenchmarkPxToMm benchmarks the PxToMm method.
 func BenchmarkPxToMm(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -66,7 +66,7 @@ func BenchmarkPxToMm(b *testing.B) {
 	}
 }
 
-// BenchmarkDpToPxLargeValue бенчмарк для больших значений.
+// BenchmarkDpToPxLargeValue benchmarks DpToPx with a large value.
 func BenchmarkDpToPxLargeValue(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -74,7 +74,7 @@ func BenchmarkDpToPxLargeValue(b *testing.B) {
 	}
 }
 
-// BenchmarkMethodsInSequence бенчмарк последовательного вызова метода.
+// BenchmarkMethodsInSequence benchmarks a sequence of method calls.
 func BenchmarkMethodsInSequence(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	b.ResetTimer()
@@ -85,7 +85,7 @@ func BenchmarkMethodsInSequence(b *testing.B) {
 	}
 }
 
-// BenchmarkDpToPxParallel бенчмарк тестирует многопоточность.
+// BenchmarkDpToPxParallel benchmarks DpToPx in a parallel context.
 func BenchmarkDpToPxParallel(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	b.RunParallel(func(pb *testing.PB) {
@@ -95,7 +95,7 @@ func BenchmarkDpToPxParallel(b *testing.B) {
 	})
 }
 
-// BenchmarkPtToPx бенчмарк для метода PtToPx.
+// BenchmarkPtToPx benchmarks the PtToPx method.
 func BenchmarkPtToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -103,7 +103,7 @@ func BenchmarkPtToPx(b *testing.B) {
 	}
 }
 
-// BenchmarkPxToPt бенчмарк для метода PxToPt.
+// BenchmarkPxToPt benchmarks the PxToPt method.
 func BenchmarkPxToPt(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -111,7 +111,7 @@ func BenchmarkPxToPt(b *testing.B) {
 	}
 }
 
-// BenchmarkPtToPxLargeValue бенчмарк для метода PxToPx с большим значением.
+// BenchmarkPtToPxLargeValue benchmarks PtToPx with a large value.
 func BenchmarkPtToPxLargeValue(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -119,7 +119,7 @@ func BenchmarkPtToPxLargeValue(b *testing.B) {
 	}
 }
 
-// BenchmarkPxToPtLargeValue бенчмарк для метода PxToPt с большими значениями.
+// BenchmarkPxToPtLargeValue benchmarks PxToPt with a large value.
 func BenchmarkPxToPtLargeValue(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
@@ -127,7 +127,7 @@ func BenchmarkPxToPtLargeValue(b *testing.B) {
 	}
 }
 
-// BenchmarkPtToPxParallel бенчмарк тестирует многопоточность метода PtToPx.
+// BenchmarkPtToPxParallel benchmarks PtToPx in a parallel context.
 func BenchmarkPtToPxParallel(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	b.RunParallel(func(pb *testing.PB) {
@@ -137,7 +137,7 @@ func BenchmarkPtToPxParallel(b *testing.B) {
 	})
 }
 
-// BenchmarkPxToPtParallel бенчмарк тестирует многопоточность метода PxToPt.
+// BenchmarkPxToPtParallel benchmarks PxToPt in a parallel context.
 func BenchmarkPxToPtParallel(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	b.RunParallel(func(pb *testing.PB) {

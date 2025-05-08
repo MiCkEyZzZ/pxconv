@@ -1,89 +1,89 @@
-// Пакет pxconv предоставляет инструменты для работы с единицами измерения
-// пользовательского интерфейса: независимыми от устройства пикселями (dp), единицами для шрифтов (sp),
-// пунктами (pt) и их преобразованием в пиксели (px) с учетом плотности экрана.
+// Package pxconv provides tools for working with user interface measurement units:
+// density-independent pixels (dp), scale-independent pixels (sp), points (pt),
+// and their conversion to physical pixels (px) based on screen density.
 //
-// # Основные концепции
+// # Key Concepts
 //
-// Dp (Density-independent Pixels) — это единицы, независимые от устройства, которые используются
-// для задания размеров элементов интерфейса (например, кнопок или отступов). Они обеспечивают
-// согласованность размеров на устройствах с разной плотностью экрана.
+// Dp (Density-independent Pixels) are device-independent units used for specifying
+// UI element sizes (e.g., buttons or paddings). They ensure consistent sizing
+// across devices with varying screen densities.
 //
-// Sp (Scale-independent Pixels) — это единицы, аналогичные Dp, но учитывающие
-// пользовательские настройки размера шрифта. Используются для задания размеров текста.
+// Sp (Scale-independent Pixels) are similar to Dp but additionally respect
+// the user's font size preferences. They are used for text sizing.
 //
-// Pt (Points) — это единицы, традиционно применяемые в типографике. В одном дюйме 72 пункта.
-// Применяются для задания размеров шрифтов и других элементов в графическом дизайне.
+// Pt (Points) are traditional typographic units. There are 72 points in an inch.
+// They are used for font sizes and other graphical design elements.
 //
-// Пиксели (px) — это физические точки на экране. Их количество на единицу длины
-// зависит от плотности экрана (DPI, dots per inch).
+// Pixels (px) are the physical dots on the screen. Their quantity per length unit
+// depends on screen density (DPI – dots per inch).
 //
-// # Структура Metric
+// # Metric Structure
 //
-// Основная структура пакета `Metric` представляет собой набор параметров для преобразования между
-// Dp, Sp, Pt и пикселями. Она позволяет учитывать плотность экрана и пользовательские настройки.
+// The core `Metric` struct represents parameters used for conversion between
+// Dp, Sp, Pt, and pixels. It accounts for screen density and user preferences.
 //
-// Поля структуры:
-//   - PxPerDp: Количество пикселей на один Dp.
-//   - PxPerSp: Количество пикселей на один Sp.
-//   - Dpi: Количество пикселей на дюйм (dots per inch).
+// Fields of the struct:
+//   - PxPerDp: Number of pixels per Dp.
+//   - PxPerSp: Number of pixels per Sp.
+//   - Dpi: Screen density in dots per inch.
 //
-// # Создание экземпляра Metric
+// # Creating a Metric Instance
 //
-// Экземпляр Metric можно создать с помощью конструктора `NewMetric`, который принимает
-// значения плотностей для Dp, Sp и DPI. Если переданы некорректные значения (0 или отрицательные),
-// они будут заменены на значение по умолчанию.
+// A `Metric` instance can be created using the `NewMetric` constructor,
+// which takes density values for Dp, Sp, and DPI. If invalid values (zero or negative)
+// are passed, they are replaced with defaults.
 //
-// Пример:
+// Example:
 //
-//	metric := pxconv.NewMetric(2.0, 1.5, 96) // Плотности: 2 px/dp, 1.5 px/sp, DPI 96.
+//	metric := pxconv.NewMetric(2.0, 1.5, 96) // Densities: 2 px/dp, 1.5 px/sp, DPI 96.
 //
-// Также можно создавать экземпляры вручную, но следует помнить, что некорректные значения могут
-// привести к ошибкам в расчетах.
+// Alternatively, you can manually create a Metric instance, but be aware that
+// invalid values may cause calculation errors.
 //
-// Пример:
+// Example:
 //
 //	metric := pxconv.Metric{PxPerDp: 2.0, PxPerSp: 1.5, Dpi: 96}
 //
-// # Конвертация единиц
+// # Unit Conversion
 //
-// Методы структуры Metric позволяют преобразовывать значения между различными единицами измерения:
+// The `Metric` methods allow converting between different measurement units:
 //
-//   - DpToPx: Преобразует Dp в пиксели (px), округляя до ближайшего целого числа.
-//   - SpToPx: Преобразует Sp в пиксели (px), округляя до ближайшего целого числа.
-//   - PtToPx: Преобразует пункты (pt) в пиксели (px).
-//   - PxToDp: Преобразует пиксели (px) в Dp.
-//   - PxToSp: Преобразует пиксели (px) в Sp.
-//   - PxToPt: Преобразует пиксели (px) в пункты (pt).
-//   - DpToSp: Преобразует Dp в Sp.
-//   - SpToDp: Преобразует Sp в Dp.
-//   - InchToPx: Преобразует дюймы (inch) в пиксели (px).
-//   - MmToPx: Преобразует миллиметры (mm) в пиксели (px).
-//   - PxToInch: Преобразует пиксели (px) в дюймы (inch).
-//   - PxToMm: Преобразует пиксели (px) в миллиметры (mm).
+//   - DpToPx: Converts Dp to pixels (px), rounding to the nearest integer.
+//   - SpToPx: Converts Sp to pixels (px), rounding to the nearest integer.
+//   - PtToPx: Converts points (pt) to pixels (px).
+//   - PxToDp: Converts pixels (px) to Dp.
+//   - PxToSp: Converts pixels (px) to Sp.
+//   - PxToPt: Converts pixels (px) to points (pt).
+//   - DpToSp: Converts Dp to Sp.
+//   - SpToDp: Converts Sp to Dp.
+//   - InchToPx: Converts inches to pixels (px).
+//   - MmToPx: Converts millimeters to pixels (px).
+//   - PxToInch: Converts pixels (px) to inches.
+//   - PxToMm: Converts pixels (px) to millimeters.
 //
-// Пример:
+// Example:
 //
-//	metric := pxconv.NewMetric(2.0, 1.5, 96) // Плотности экрана
-//	pxFromDp := metric.DpToPx(10)           // Результат: 20 px
-//	pxFromSp := metric.SpToPx(10)           // Результат: 15 px
-//	pxFromPt := metric.PtToPx(12)           // Результат: 16 px (при DPI 96)
-//	dpFromPx := metric.PxToDp(20)           // Результат: 10 dp
-//	spFromPx := metric.PxToSp(15)           // Результат: 10 sp
-//	ptFromPx := metric.PxToPt(16)           // Результат: 12 pt (при DPI 96)
+//	metric := pxconv.NewMetric(2.0, 1.5, 96) // Screen densities
+//	pxFromDp := metric.DpToPx(10)           // Result: 20 px
+//	pxFromSp := metric.SpToPx(10)           // Result: 15 px
+//	pxFromPt := metric.PtToPx(12)           // Result: 16 px (at DPI 96)
+//	dpFromPx := metric.PxToDp(20)           // Result: 10 dp
+//	spFromPx := metric.PxToSp(15)           // Result: 10 sp
+//	ptFromPx := metric.PxToPt(16)           // Result: 12 pt (at DPI 96)
 //
-// # Особенности
+// # Features
 //
-// Пакет pxconv учитывает плотность экрана и пользовательские настройки, что делает его подходящим
-// для адаптивных интерфейсов. Если входные значения некорректны (0 или отрицательные), методы пакета
-// заменяют их на значение по умолчанию, предотвращая ошибки.
+// The pxconv package accounts for screen density and user preferences,
+// making it suitable for adaptive UI design. If input values are invalid
+// (zero or negative), methods fall back to default values to avoid errors.
 //
-// Пример:
+// Example:
 //
 //	metric := pxconv.NewMetric(0, -5, 0) // PxPerDp = 1, PxPerSp = 1, Dpi = 96.
 //
-// # Применение
+// # Usage
 //
-// Пакет pxconv полезен для разработки масштабируемых интерфейсов на мобильных устройствах, настольных компьютерах
-// и других графических системах. Преобразование между единицами позволяет создавать интерфейсы, которые
-// корректно отображаются на экранах с разной плотностью.
+// The pxconv package is useful for developing scalable UIs for mobile devices,
+// desktops, and other graphical systems. Unit conversion helps create interfaces
+// that render correctly on screens with varying densities.
 package pxconv
