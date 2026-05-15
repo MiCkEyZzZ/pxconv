@@ -14,7 +14,6 @@ linters:
         - ineffassign
         - misspell
         - whitespace
-
     settings:
         revive:
             rules:
@@ -43,23 +42,22 @@ linters:
                   severity: warning
                 - name: unnecessary-stmt
                   severity: warning
-
         godot:
             scope: declarations
             capital: false
             period: true
-
         errcheck:
             check-type-assertions: true
             check-blank: true
-
         exhaustive:
             default-signifies-exhaustive: true
-
         govet:
             enable:
                 - shadow
 
+issues:
+    max-issues-per-linter: 50
+    max-same-issues: 10
     exclusions:
         rules:
             - path: _test\.go

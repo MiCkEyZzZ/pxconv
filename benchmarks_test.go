@@ -6,7 +6,7 @@ import "testing"
 func BenchmarkDpToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.DpToPx(Dp(10))
+		_ = metric.DpToPx(Dp(10))
 	}
 }
 
@@ -14,7 +14,7 @@ func BenchmarkDpToPx(b *testing.B) {
 func BenchmarkSpToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.SpToPx(Sp(15))
+		_ = metric.SpToPx(Sp(15))
 	}
 }
 
@@ -22,7 +22,7 @@ func BenchmarkSpToPx(b *testing.B) {
 func BenchmarkPxToDp(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.PxToDp(50)
+		_ = metric.PxToDp(50)
 	}
 }
 
@@ -30,7 +30,7 @@ func BenchmarkPxToDp(b *testing.B) {
 func BenchmarkDpToSp(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.DpToSp(Dp(10))
+		_ = metric.DpToSp(Dp(10))
 	}
 }
 
@@ -38,7 +38,7 @@ func BenchmarkDpToSp(b *testing.B) {
 func BenchmarkInchToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.InchToPx(Inch(1.0))
+		_ = metric.InchToPx(Inch(1.0))
 	}
 }
 
@@ -46,7 +46,7 @@ func BenchmarkInchToPx(b *testing.B) {
 func BenchmarkMmToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.MmToPx(Mm(25.4))
+		_ = metric.MmToPx(Mm(25.4))
 	}
 }
 
@@ -54,7 +54,7 @@ func BenchmarkMmToPx(b *testing.B) {
 func BenchmarkPxToInch(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.PxToInch(96)
+		_ = metric.PxToInch(96)
 	}
 }
 
@@ -62,7 +62,7 @@ func BenchmarkPxToInch(b *testing.B) {
 func BenchmarkPxToMm(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.PxToMm(96)
+		_ = metric.PxToMm(96)
 	}
 }
 
@@ -70,7 +70,7 @@ func BenchmarkPxToMm(b *testing.B) {
 func BenchmarkDpToPxLargeValue(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.DpToPx(Dp(1_000_000))
+		_ = metric.DpToPx(Dp(1_000_000))
 	}
 }
 
@@ -90,7 +90,7 @@ func BenchmarkDpToPxParallel(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			metric.DpToPx(Dp(10))
+			_ = metric.DpToPx(Dp(10))
 		}
 	})
 }
@@ -99,7 +99,7 @@ func BenchmarkDpToPxParallel(b *testing.B) {
 func BenchmarkPtToPx(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.PtToPx(Pt(12))
+		_ = metric.PtToPx(Pt(12))
 	}
 }
 
@@ -107,7 +107,7 @@ func BenchmarkPtToPx(b *testing.B) {
 func BenchmarkPxToPt(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.PxToPt(96)
+		_ = metric.PxToPt(96)
 	}
 }
 
@@ -115,7 +115,7 @@ func BenchmarkPxToPt(b *testing.B) {
 func BenchmarkPtToPxLargeValue(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.PtToPx(Pt(1_000))
+		_ = metric.PtToPx(Pt(1_000))
 	}
 }
 
@@ -123,7 +123,7 @@ func BenchmarkPtToPxLargeValue(b *testing.B) {
 func BenchmarkPxToPtLargeValue(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	for i := 0; i < b.N; i++ {
-		metric.PxToPt(10_000)
+		_ = metric.PxToPt(10_000)
 	}
 }
 
@@ -132,7 +132,7 @@ func BenchmarkPtToPxParallel(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			metric.PtToPx(Pt(12))
+			_ = metric.PtToPx(Pt(12))
 		}
 	})
 }
@@ -142,7 +142,7 @@ func BenchmarkPxToPtParallel(b *testing.B) {
 	metric := NewMetric(2.0, 2.0, 96)
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			metric.PxToPt(96)
+			_ = metric.PxToPt(96)
 		}
 	})
 }
