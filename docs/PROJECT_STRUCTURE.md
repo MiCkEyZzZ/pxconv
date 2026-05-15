@@ -20,6 +20,7 @@ pxconv
 ├── .gitignore
 ├── benchmarks_test.go
 ├── doc.go
+├── fuzz_test.go
 ├── go.mod
 ├── LICENSE
 ├── prop_test.go
