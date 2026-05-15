@@ -6,6 +6,7 @@ pxconv
 │   ├── workflows
 │   │   └── ci.yml
 │   └── .golangci.yml
+├── .zed
 ├── docs
 │   ├── PROJECT_STRUCTURE.md
 │   └── ROADMAP.md
