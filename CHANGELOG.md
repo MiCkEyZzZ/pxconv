@@ -9,6 +9,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- Property-based tests added using `pgregory.net/rapid` (v1.1.0):
+    - `TestPropDpToPxRoundtrip` — verifies `DpToPx → PxToDp` stability within rounding tolerance `0.5/pxPerDp`
+    - `TestPropSpToPxRoundtrip` — verifies `SpToPx → PxToSp` roundtrip stability with equivalent tolerance
+    - `TestPropInchToPxEqualsDpi` — ensures `InchToPx(1) == round(Dpi)` for DPI values in range `[72, 600]`
+    - `TestPropMmPerInchEqualsDpi` — validates physical invariant `25.4 mm == 1 inch`
+    - `TestPropPtPerInchEqualsDpi` — validates typographic invariant `72 pt == 1 inch`
+    - `TestPropDpToSpIdentity` — checks identity conversion when `PxPerDp == PxPerSp`
+    - `TestPropDpToSpRoundtrip` — verifies roundtrip correctness for arbitrary density values
+
 - `.golangci.yml` — enabled full required linter set plus a solid baseline configuration:
     - `errcheck` — detects ignored errors
     - `exhaustive` — ensures completeness of enum `switch` statements
@@ -38,3 +47,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
         - same updates applied to `PxPerSp` and `Dpi`
     - added `Deprecated:` annotation to `ScaleByDpi`
         - aligns with linting rules and prepares API for future cleanup
+
+### Changed
+
+- `go.mod`:
+    - added dependency `pgregory.net/rapid` v1.1.0 for property-based testing
+    - updated minimum Go version to `1.21` to align with CI matrix requirements
