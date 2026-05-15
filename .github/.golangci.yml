@@ -10,10 +10,10 @@ linters:
         - govet
         - staticcheck
         - unused
-        - gosimple
         - ineffassign
         - misspell
         - whitespace
+
     settings:
         revive:
             rules:
@@ -42,15 +42,19 @@ linters:
                   severity: warning
                 - name: unnecessary-stmt
                   severity: warning
+
         godot:
             scope: declarations
             capital: false
             period: true
+
         errcheck:
             check-type-assertions: true
             check-blank: true
+
         exhaustive:
             default-signifies-exhaustive: true
+
         govet:
             enable:
                 - shadow
