@@ -1,0 +1,68 @@
+version: "2"
+
+linters:
+    default: none
+    enable:
+        - errcheck
+        - exhaustive
+        - revive
+        - godot
+        - govet
+        - staticcheck
+        - unused
+        - gosimple
+        - ineffassign
+        - misspell
+        - whitespace
+
+    settings:
+        revive:
+            rules:
+                - name: exported
+                  severity: warning
+                  arguments:
+                      - checkPrivateReceivers
+                      - sayRepetitiveInsteadOfStutters
+                - name: var-naming
+                  severity: warning
+                - name: blank-imports
+                  severity: warning
+                - name: context-as-argument
+                  severity: warning
+                - name: error-return
+                  severity: warning
+                - name: increment-decrement
+                  severity: warning
+                - name: range
+                  severity: warning
+                - name: receiver-naming
+                  severity: warning
+                - name: time-naming
+                  severity: warning
+                - name: unexported-return
+                  severity: warning
+                - name: unnecessary-stmt
+                  severity: warning
+
+        godot:
+            scope: declarations
+            capital: false
+            period: true
+
+        errcheck:
+            check-type-assertions: true
+            check-blank: true
+
+        exhaustive:
+            default-signifies-exhaustive: true
+
+        govet:
+            enable:
+                - shadow
+
+    exclusions:
+        rules:
+            - path: _test\.go
+              linters:
+                  - errcheck
+                  - exhaustive
