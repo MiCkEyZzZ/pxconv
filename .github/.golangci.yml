@@ -10,7 +10,6 @@ linters:
         - govet
         - staticcheck
         - unused
-        - gosimple
         - ineffassign
         - misspell
         - whitespace
@@ -66,3 +65,7 @@ linters:
               linters:
                   - errcheck
                   - exhaustive
+
+issues:
+    max-issues-per-linter: 50
+    max-same-issues: 10
