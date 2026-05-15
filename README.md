@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/MiCkEyZzZ/pxconv/actions/workflows/ci.yml/badge.svg)](https://github.com/MiCkEyZzZ/pxconv/actions/workflows/ci.yml)
 [![godoc](https://godoc.org/github.com/MiCkEyZzZ/pxconv?status.svg)](https://pkg.go.dev/github.com/MiCkEyZzZ/pxconv?tab=doc)
+[![Go Version](https://img.shields.io/badge/go-1.23+-blue)](https://go.dev)
 
 `pxconv` is a Go package for working with screen units of measurement (dp, sp, px, inch, mm, pt), considering screen density.
 
