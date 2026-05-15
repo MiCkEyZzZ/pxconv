@@ -2,6 +2,10 @@
 
 ```text
 pxconv
+├── .github
+│   ├── workflows
+│   │   └── ci.yml
+│   └── .golangci.yml
 ├── docs
 │   ├── PROJECT_STRUCTURE.md
 │   └── ROADMAP.md

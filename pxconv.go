@@ -5,9 +5,12 @@ import (
 )
 
 const (
-	DefaultDpi    = 96   // Default DPI value for most displays.
-	MmPerInch     = 25.4 // Number of millimeters in one inch, used for conversions.
-	PointsPerInch = 72   // Number of points in one inch.
+	// DefaultDpi is the default DPI value for most displays.
+	DefaultDpi = 96
+	// MmPerInch is the number of millimeters in one inch, used for conversions.
+	MmPerInch = 25.4
+	// PointsPerInch is the number of points in one inch.
+	PointsPerInch = 72
 )
 
 // Dp represents device-independent pixels used for measuring distances on the screen.
@@ -121,6 +124,8 @@ func (c Metric) GetDensity() (float32, float32) {
 
 // ScaleByDpi scales the current densities (PxPerDp, PxPerSp, and Dpi)
 // by the given factor. Modifies the Metric instance in place.
+//
+// Deprecated: use Scale instead, which returns a new Metric without mutation.
 func (c *Metric) ScaleByDpi(scale float32) {
 	if scale <= 0 {
 		scale = 1 // Prevents errors from invalid scaling factors.
