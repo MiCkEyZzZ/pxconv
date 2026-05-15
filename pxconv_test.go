@@ -3,6 +3,8 @@ package pxconv
 import (
 	"sync"
 	"testing"
+
+	"github.com/MiCkEyZzZ/pxconv/internal/consts"
 )
 
 // TestDpToPx checks if the dp value is correctly rounded to pixels.
@@ -269,7 +271,7 @@ func TestMmToPx(t *testing.T) {
 		mm       Mm
 		expected int
 	}{
-		{MmPerInch, 96}, // 25.4 mm = 1 inch = 96 pixels
+		{consts.MmPerInch, 96}, // 25.4 mm = 1 inch = 96 pixels
 		{0, 0},
 		{50.8, 192}, // 50.8 mm = 2 inches
 	}
@@ -309,7 +311,7 @@ func TestPxToMm(t *testing.T) {
 		px       int
 		expected Mm
 	}{
-		{96, MmPerInch}, // 96 pixels = 25.4 mm
+		{96, consts.MmPerInch}, // 96 pixels = 25.4 mm
 		{0, 0},
 		{192, 50.8}, // 192 pixels = 50.8 mm
 	}

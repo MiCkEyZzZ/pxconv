@@ -2,15 +2,9 @@ package pxconv
 
 import (
 	"math"
-)
 
-const (
-	// DefaultDpi is the default DPI value for most displays.
-	DefaultDpi = 96
-	// MmPerInch is the number of millimeters in one inch, used for conversions.
-	MmPerInch = 25.4
-	// PointsPerInch is the number of points in one inch.
-	PointsPerInch = 72
+	"github.com/MiCkEyZzZ/pxconv/internal/consts"
+	"github.com/MiCkEyZzZ/pxconv/internal/density"
 )
 
 // Dp represents device-independent pixels used for measuring distances on the screen.
@@ -42,43 +36,43 @@ type Metric struct {
 // If any of the values are zero or negative, they are replaced with 1.
 func NewMetric(pxPerDp, pxPerSp, dpi float32) Metric {
 	if dpi <= 0 {
-		dpi = DefaultDpi
+		dpi = consts.DefaultDpi
 	}
 	return Metric{
-		PxPerDp: ensurePositive(pxPerDp),
-		PxPerSp: ensurePositive(pxPerSp),
+		PxPerDp: density.EnsurePositive(pxPerDp),
+		PxPerSp: density.EnsurePositive(pxPerSp),
 		Dpi:     dpi,
 	}
 }
 
 // DpToPx converts a dp value to pixels, rounding to the nearest integer.
 func (c Metric) DpToPx(value Dp) int {
-	return int(math.Round(float64(ensurePositive(c.PxPerDp)) * float64(value)))
+	return int(math.Round(float64(density.EnsurePositive(c.PxPerDp)) * float64(value)))
 }
 
 // SpToPx converts an sp value to pixels, rounding to the nearest integer.
 func (c Metric) SpToPx(value Sp) int {
-	return int(math.Round(float64(ensurePositive(c.PxPerSp)) * float64(value)))
+	return int(math.Round(float64(density.EnsurePositive(c.PxPerSp)) * float64(value)))
 }
 
 // DpToSp converts a dp value to sp, using the current density values.
 func (c Metric) DpToSp(value Dp) Sp {
-	return Sp(float32(value) * ensurePositive(c.PxPerDp) / ensurePositive(c.PxPerSp))
+	return Sp(float32(value) * density.EnsurePositive(c.PxPerDp) / density.EnsurePositive(c.PxPerSp))
 }
 
 // SpToDp converts an sp value to dp, using the current density values.
 func (c Metric) SpToDp(value Sp) Dp {
-	return Dp(float32(value) * ensurePositive(c.PxPerSp) / ensurePositive(c.PxPerDp))
+	return Dp(float32(value) * density.EnsurePositive(c.PxPerSp) / density.EnsurePositive(c.PxPerDp))
 }
 
 // PxToDp converts a pixel value to dp.
 func (c Metric) PxToDp(value int) Dp {
-	return Dp(float32(value) / ensurePositive(c.PxPerDp))
+	return Dp(float32(value) / density.EnsurePositive(c.PxPerDp))
 }
 
 // PxToSp converts a pixel value to sp.
 func (c Metric) PxToSp(value int) Sp {
-	return Sp(float32(value) / ensurePositive(c.PxPerSp))
+	return Sp(float32(value) / density.EnsurePositive(c.PxPerSp))
 }
 
 // InchToPx converts inches to pixels using the current DPI.
@@ -90,7 +84,7 @@ func (c Metric) InchToPx(value Inch) int {
 // MmToPx converts millimeters to pixels using the current DPI.
 // For example, with DPI = 96 and MmToPx(25.4), the result is 96.
 func (c Metric) MmToPx(value Mm) int {
-	return int(math.Round(float64(value) * float64(c.Dpi) / MmPerInch))
+	return int(math.Round(float64(value) * float64(c.Dpi) / consts.MmPerInch))
 }
 
 // PxToInch converts pixels to inches using the current DPI.
@@ -102,18 +96,18 @@ func (c Metric) PxToInch(value int) Inch {
 // PxToMm converts pixels to millimeters using the current DPI.
 // For example, with DPI = 96 and 96 pixels, the result is 25.4 mm.
 func (c Metric) PxToMm(value int) Mm {
-	return Mm(float32(value) * MmPerInch / c.Dpi)
+	return Mm(float32(value) * consts.MmPerInch / c.Dpi)
 }
 
 // PtToPx converts points to pixels using the current DPI.
 // For example, with DPI = 96, PtToPx(72) returns 96.
 func (c Metric) PtToPx(value Pt) int {
-	return int(math.Round(float64(value) * float64(c.Dpi) / PointsPerInch))
+	return int(math.Round(float64(value) * float64(c.Dpi) / consts.PointsPerInch))
 }
 
 // PxToPt converts pixels to points using the current DPI.
 func (c Metric) PxToPt(value int) Pt {
-	return Pt(float32(value) * PointsPerInch / c.Dpi)
+	return Pt(float32(value) * consts.PointsPerInch / c.Dpi)
 }
 
 // GetDensity returns the current density values (PxPerDp and PxPerSp).
@@ -133,13 +127,4 @@ func (c *Metric) ScaleByDpi(scale float32) {
 	c.PxPerDp *= scale
 	c.PxPerSp *= scale
 	c.Dpi *= scale
-}
-
-// ensurePositive returns a positive value.
-// If the input is zero or negative, it returns 1.
-func ensurePositive(value float32) float32 {
-	if value <= 0 {
-		return 1
-	}
-	return value
 }

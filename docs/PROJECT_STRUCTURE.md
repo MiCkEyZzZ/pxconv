@@ -12,6 +12,11 @@ pxconv
 │   └── ROADMAP.md
 ├── examples
 │   └── main.go
+├── internal
+│   ├── consts
+│   │   └── consts.go
+│   └── density
+│       └── validate.go
 ├── .gitignore
 ├── benchmarks_test.go
 ├── doc.go
